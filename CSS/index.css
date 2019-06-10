@@ -73,7 +73,7 @@
         width: 100%;
         height: 120px;
     }
-    #ctrl div{
+    .ctrl-box{
         position: absolute;
         margin:auto;left: 0;right: 0;
         line-height: 40px;
@@ -86,9 +86,22 @@
     #ctrl-resort{
         top: 55px;
     }
-    #ctrl div:hover{
+    .ctrl-box:hover {
         cursor:pointer;
         background: burlywood;
+    }
+    #ctrl-backup {
+        top:110px;
+    }
+    .disabled{
+        background: #fff;
+        border: #ccc 1px solid;
+        color: #ccc;
+    }
+    .disabled:hover,
+    .disabled:active{
+        cursor: default;
+        background: #fff;
     }
 /* 信息框布局--结束 */
 
