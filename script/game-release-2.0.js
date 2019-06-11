@@ -477,8 +477,7 @@
             alert("撤销次数用尽");
             return false;
         }
-        board = history_board[0];
-        history_board.shift();
+        board = history_board.pop();
         update();
         times--;
         back_times.text(times);
