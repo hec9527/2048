@@ -1,6 +1,6 @@
 # 2048game.github.io
 
-[2048在线试玩](https://kiss-me.github.io/2048game.github.io/  "GitHub访问速度可能会比较慢,请耐心等待")
+[2048在线试玩](https://coderx86.github.io/2048game.github.io/  "GitHub访问速度可能会比较慢,请耐心等待")
  
 **<font color='#f44'>如果你对这个项目感兴趣的话，可以一起开发讨论并提出你宝贵的意见</font>** 
 
