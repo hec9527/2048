@@ -12,12 +12,6 @@ window.requestAnimFrame = (function() {
 
 // 采用闭包的方式，拒绝外部修改游戏变量
 (() => {
-    const canvas = document.getElementById('app');
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = 516;
-    canvas.height = 456;
-
     /**
      * 游戏类
      * 主要是游戏进程中的相关参数配置
@@ -170,7 +164,161 @@ window.requestAnimFrame = (function() {
         };
     }
 
-    const kb = new KeyBorad();
+    /**
+     * 图片类加载图片
+     */
+    function Images(callback) {
+        let loaded = 0;
+
+        const image_list = {};
+
+        const image_path = [
+            {
+                type: 'boom',
+                path: './image/Boom.png'
+            },
+            {
+                type: 'ui',
+                path: './image/UI.png'
+            },
+            {
+                type: 'bonus',
+                path: './image/bonus.png'
+            },
+            {
+                type: 'brike',
+                path: './image/brick.png'
+            },
+            {
+                type: 'enemytank',
+                path: './image/enemyTank.png'
+            },
+            {
+                type: 'getscore',
+                path: './image/getScore.png'
+            },
+            {
+                type: 'getdoublescroe',
+                path: './image/getScoreDouble.png'
+            },
+            {
+                type: 'mytank',
+                path: './image/myTank.png'
+            },
+            {
+                type: 'tool',
+                path: './image/tool.png'
+            }
+        ];
+
+        // 加载图片
+        image_path.forEach(value => {
+            const image = new Image();
+            image.onload = function() {
+                image_list[value.type] = image;
+                loaded++;
+                if (loaded === image_path.length) {
+                    console.log(`ok\t图片加载`);
+                    callback && callback(image_list);
+                }
+            };
+            image.src = value.path;
+        });
+
+        // 获取指定的图片
+        this.getImage = function(imType) {
+            return image_list[imType];
+        };
+    }
+
+    /**
+     * 声音类
+     */
+    function Sound() {
+        const music_path = [
+            {
+                type: 'attack',
+                path: './music/attack.mp3'
+            },
+            {
+                type: 'attackover',
+                path: './music/attackOver.mp3'
+            },
+            {
+                type: 'bomb',
+                path: './music/bomb.mp3'
+            },
+            {
+                type: 'eat',
+                path: './music/eat.mp3'
+            },
+            {
+                type: 'exploed',
+                path: './music/explode.mp3'
+            },
+            {
+                type: 'life',
+                path: './music/life.mp3'
+            },
+            {
+                type: 'misc',
+                path: './music/misc.mp3'
+            },
+            {
+                type: 'pause',
+                path: './music/pause.mp3'
+            },
+            {
+                type: 'start',
+                path: './music/start.mp3'
+            }
+        ];
+
+        // 加载音频到内存
+        music_path.forEach(value => {
+            const audio = new Audio(value.path);
+            audio.play();
+            audio.oncanplaythrough = function() {
+                console.log('loaded');
+            };
+            // audio.onload = function() {
+            //     console.log('loaded');
+            // };
+        });
+
+        // 播放
+        this.play = function(media_type) {
+            for (let i = 0; i < sound_path.length; i++) {
+                if (sound_path) {
+                }
+            }
+        };
+    }
+
+    /**
+     * 游戏主要流程
+     */
+    function init() {
+        const canvas = document.getElementById('app');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = 516;
+        canvas.height = 456;
+
+        // 保存游戏运行过程中的参数
+        const game = new Game();
+        // 加载键盘模块，监听按键按下
+        const keyborad = new KeyBorad();
+        // 图片模块  加载图片，并且提供使用这些图片的接口
+        const image = new Images(lis => {
+            // console.log(lis);
+        });
+        const media = new Sound();
+
+        window.image = image;
+    }
+
+    init();
 })();
 
 console.log(`============Battle City============
