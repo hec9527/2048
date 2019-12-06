@@ -14,7 +14,7 @@
     width: 900px;
     height: 550px;
     border: 1px solid rgba(117, 115, 115, 0.753);
-    box-shadow: 8px 6px 10px rgba(117, 115, 115, 0.453);
+    box-shadow: 8px 8px 10px 3px rgba(117, 115, 115, 0.3);
 }
 #gameBox {
     width: 600px;
