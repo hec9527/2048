@@ -1,4 +1,4 @@
-# 2048game.github.io
+# 2048 小游戏
 
 [2048 在线试玩](https://hec9527.github.io/2048/src 'GitHub访问速度可能会比较慢,请耐心等待')
 
