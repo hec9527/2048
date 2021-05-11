@@ -1,0 +1,135 @@
+/* 模板布局--开始 */
+*{
+    padding: 0;margin: 0;list-style: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+    html,body{
+        height: 100%;
+    }
+    #continer{
+        overflow: hidden;
+        position: absolute;
+        margin: auto;
+        top: 0;bottom: 0;right: 0;left: 0;
+        width: 900px;
+        height: 600px;
+        border: 1px solid rgba(117, 115, 115, 0.753);
+        box-shadow: 8px 6px 10px rgba(117, 115, 115, 0.453);
+    }
+    #gameBox{
+        width: 500px;height: 500px;
+        box-sizing: padding-box;
+        border: 1px solid rgba(117, 115, 115, 0.753);
+        margin: 50px;
+        position: relative;
+        padding: 0px;
+        float: left;
+    }
+    #wall{
+        width: 1px;
+        height: 100%;
+        background: rgba(117, 115, 115, 0.753);
+        position: absolute;
+        left: 600px;
+        top: 0;
+    }
+    #mesBox{
+        width: 298px;
+        height: 100%;
+        box-sizing: border-box;
+        position: relative;
+        float: left;
+    }
+/* 模板布局--=结束 */
+
+
+
+
+
+/* 信息框布局--开始 */
+    #scope{
+        position:absolute;
+        width: 70%;
+        height:auto;
+        margin:auto;
+        left: 0;right: 0;
+        top: 150px;
+    }
+    #scope h3{
+        font-size: 28px;
+    }
+    #scope span{
+        font-size: 24px;
+        display: block;
+        width: 100%;
+        text-align:right;
+    }
+    #ctrl{
+        position: absolute;
+        bottom:170px;
+        width: 100%;
+        height: 120px;
+    }
+    .ctrl-box{
+        position: absolute;
+        margin:auto;left: 0;right: 0;
+        line-height: 40px;
+        text-align: center;
+        border-radius:15px;
+        width: 150px;
+        height: 40px;
+        background: #ccc;
+    }
+    #ctrl-resort{
+        top: 55px;
+    }
+    .ctrl-box:hover {
+        cursor:pointer;
+        background: burlywood;
+    }
+    #ctrl-backup {
+        top:110px;
+    }
+    .disabled{
+        background: #fff;
+        border: #ccc 1px solid;
+        color: #ccc;
+    }
+    .disabled:hover,
+    .disabled:active{
+        cursor: default;
+        background: #fff;
+    }
+/* 信息框布局--结束 */
+
+
+
+
+/* 游戏区域布局--开始 */
+    #box{
+        width:inherit;
+        height:inherit;
+        background-color: #bbada0;
+        position: relative;
+    }
+    .grid-cell{
+        width: 106px;
+        height: 106px;
+        border-radius:8px;
+        margin: auto;
+        background-color: #ccc0b3;
+        position: absolute;
+    }
+    .number-cell{
+        border-radius: 6px;
+        /* font-size: 60px; */
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        line-height: 110px;
+        text-align: center;
+        position: absolute;
+    }
+/* 游戏区域布局--结束 */
