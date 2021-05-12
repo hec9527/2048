@@ -87,7 +87,7 @@ body {
     color: #fff;
     border-radius: 8px;
     background: #5ca8f8;
-    box-shadow: 4px 4px 12px #5ca8f8, -2px -2px 12px #ededed;
+    box-shadow: 4px 4px 20px #5ca8f8, -2px -2px 20px #ededed;
     line-height: 40px;
     text-align: center;
     cursor: pointer;
