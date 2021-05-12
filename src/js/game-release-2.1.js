@@ -10,6 +10,10 @@
  */
 
 (function () {
+    // number-cell  size
+    const size = 110;
+    const padding = 16;
+
     var board = Array();
     var score = {
         el: $('#scpoeValue'),
@@ -142,7 +146,7 @@
      * @param i 当给定的是第一维索引的时候为上边距 第二维索引的时候为右边距
      */
     function getPos(j) {
-        return 15 + 120 * j;
+        return padding + (size + padding) * j;
     }
     // 获取随机位置和数字
     function getRandPosAndNum() {
@@ -447,8 +451,8 @@
                     );
                     $('#number-cell-' + i + '-' + j)
                         .css({
-                            width: '106px',
-                            height: '106px',
+                            width: size,
+                            height: size,
                             top: getPos(i),
                             left: getPos(j),
                             'background-color': getBgColor(board[i][j]),
@@ -479,8 +483,8 @@
             .animate(
                 {
                     lineHeight: '110px',
-                    width: '106px',
-                    height: '106px',
+                    width: size,
+                    height: size,
                     top: getPos(x),
                     left: getPos(y)
                 },
