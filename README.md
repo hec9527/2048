@@ -1,4 +1,4 @@
-<center>
+<center style="text-align:center">
     <h1>2048 小游戏</h1>
     <p>powered by hec9527</p>
 </center>
