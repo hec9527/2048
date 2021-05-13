@@ -1,7 +1,7 @@
 /**
  *  @author         hc
  *  @ctime          2019/6/8
- *  @lastModifi     2019/6/28
+ *  @lastModifi     2021/05/13
  *  @description
  *
  *  判断是否可以移动也是采用行列映射的方式,依次处理每一行或者每一列,但是判定的关键是:
@@ -10,9 +10,27 @@
  */
 
 (function () {
-    // number-cell  size
-    const size = 110;
-    const padding = 16;
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+    );
+    var size = isMobile ? 17 : 110;
+    var padding = isMobile ? 2.4 : 16;
+
+    var colors = {
+        2: '#eee4da',
+        4: '#ede0c8',
+        8: '#f2b179',
+        16: '#f59563',
+        32: '#f67c5f',
+        64: '#f65e3b',
+        128: '#edcf72',
+        256: '#edcc61',
+        512: '#99cc00',
+        1024: '#33b5e5',
+        2048: '#0099cc',
+        4096: '#aa66cc',
+        8192: '#9933cc'
+    };
 
     var board = Array();
     var score = {
@@ -64,15 +82,28 @@
     var history_board = [];
     var game_over = false;
     var move_lock = false;
-    //初始化
-    function init() {
-        initBoard();
-        initArgs();
-        getRandPosAndNum();
-        getRandPosAndNum();
-        update();
-        // 监听按键操作
-        document.onkeydown = function (e) {
+
+    /** 事件监听 */
+    window.addEventListener('resize', () => window.location.reload());
+    // 监听重置按钮
+    $('#ctrl-reset')[0].onclick = function (e) {
+        e.stopPropagation(); // 捕获事件冒泡
+        init();
+    };
+    // 监听排序按钮
+    $('#ctrl-resort')[0].onclick = function (e) {
+        e.stopPropagation();
+        sortGame();
+    };
+    // 监听撤销按钮
+    $('#ctrl-backup')[0].onclick = function (e) {
+        e.stopPropagation();
+        go_back();
+    };
+
+    // 监听按键操作
+    (function () {
+        document.addEventListener('keydown', function (e) {
             if (!game_over) {
                 if (move_lock) {
                     return false;
@@ -89,42 +120,80 @@
                         ifCanMoveDown() && moveDown();
                     }
                 }
-                if (ifGmaeOver()) {
-                    game_over = true;
-                    setTimeout(function () {
-                        if (window.confirm('Game Over!\n重新开始？')) {
-                            init();
-                        }
-                    }, 350);
+                ifGmaeOver();
+            }
+        });
+    })();
+
+    // 移动端操作
+    (function () {
+        var gameBox = document.getElementById('gameBox');
+        var x = 0;
+        var y = 0;
+        var dx = 0;
+        var dy = 0;
+        gameBox.addEventListener('touchstart', e => {
+            e.preventDefault();
+            if (e.touches.length > 1 || e.touches.length < 1) return;
+            x = e.touches[0].clientX;
+            y = e.touches[0].clientY;
+            dx = 0;
+            dy = 0;
+        });
+
+        gameBox.addEventListener(
+            'touchmove',
+            e => {
+                e.preventDefault();
+                if (e.touches.length > 1 || e.touches.length < 1) return;
+                dx = e.touches[0].clientX - x;
+                dy = e.touches[0].clientY - y;
+            },
+            // 禁止滚动
+            { passive: false }
+        );
+        gameBox.addEventListener('touchend', e => {
+            e.preventDefault();
+            if (e.touches.length > 1 || move_lock) return;
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx >= 0) {
+                    ifCanMoveRight() && moveRight();
+                } else {
+                    ifCanMoveLeft() && moveLeft();
+                }
+            } else {
+                if (dy >= 0) {
+                    ifCanMoveDown() && moveDown();
+                } else {
+                    ifCanMoveUp() && moveUp();
                 }
             }
-        };
-        // 监听重置按钮
-        $('#ctrl-reset')[0].onclick = function (e) {
-            e.stopPropagation(); // 捕获事件冒泡
-            init();
-        };
-        // 监听排序按钮
-        $('#ctrl-resort')[0].onclick = function (e) {
-            e.stopPropagation();
-            sortGame();
-        };
-        // 监听撤销按钮
-        $('#ctrl-backup')[0].onclick = function (e) {
-            e.stopPropagation();
-            go_back();
-        };
+            ifGmaeOver();
+        });
+    })();
+
+    //初始化
+    function init() {
+        initBoard();
+        initArgs();
+        getRandPosAndNum();
+        getRandPosAndNum();
+        update();
     }
+
     //初始化棋盘
     function initBoard() {
+        $('#box').html('');
         for (var i = 0; i < 4; i++) {
             board[i] = Array();
             for (var j = 0; j < 4; j++) {
                 board[i][j] = 0;
                 $('<li></li>')
                     .css({
-                        top: getPos(i),
-                        left: getPos(j)
+                        width: size + (isMobile ? 'rem' : 'px'),
+                        height: size + (isMobile ? 'rem' : 'px'),
+                        top: getPos(i) + (isMobile ? 'rem' : 'px'),
+                        left: getPos(j) + (isMobile ? 'rem' : 'px')
                     })
                     .attr({
                         class: 'grid-cell',
@@ -162,58 +231,26 @@
     }
     // 根据所给的数字获取对应的    背景颜色
     function getBgColor(num) {
-        switch (parseInt(num)) {
-            case 2:
-                return '#eee4da';
-            case 4:
-                return '#ede0c8';
-            case 8:
-                return '#f2b179';
-            case 16:
-                return '#f59563';
-            case 32:
-                return '#f67c5f';
-            case 64:
-                return '#f65e3b';
-            case 128:
-                return '#edcf72';
-            case 256:
-                return '#edcc61';
-            case 512:
-                return '#99cc00';
-            case 1024:
-                return '#33b5e5';
-            case 2048:
-                return '#0099cc';
-            case 4096:
-                return '#aa66cc';
-            case 8192:
-                return '#9933cc';
-            default:
-                return '#ff0000';
-        }
+        return colors[num] || '#ff0000';
     }
     // 根据所给的数字获取对应的   数字颜色
     function getNumColor(num) {
-        if (parseInt(num) <= 4) {
-            return '#776e65';
-        }
-        return 'white';
+        return num <= 4 ? '#776e65' : 'white';
     }
     // 根据方块上的数值的大小设置字体的大小
     function getNumFontSize(num) {
         var len = num.toString().length;
         switch (len) {
             case 1:
-                return '70px';
+                return isMobile ? '13rem' : '70px';
             case 2:
-                return '60px';
+                return isMobile ? '11rem' : '60px';
             case 3:
-                return '50px';
+                return isMobile ? '9.5rem' : '50px';
             case 4:
-                return '40px';
+                return isMobile ? '6.5rem' : '40px';
             case 5:
-                return '30px';
+                return isMobile ? '5.2rem' : '30px';
         }
     }
     // 判断是否还有空白方块
@@ -419,6 +456,7 @@
             }
         }
         update();
+        setAttr();
     }
     // 检测游戏是否 Over
     function ifGmaeOver() {
@@ -431,14 +469,14 @@
         ) {
             return false;
         }
-        return true;
+        game_over = true;
+        setTimeout(function () {
+            if (window.confirm(`Game Over! 重新开始?\n\t\t您的分数为：${score.value}`)) {
+                init();
+            }
+        }, 350);
     }
-    // 更新分数
-    function score_update(num) {
-        var cScore = score.text();
-        cScore = parseInt(cScore) + parseInt(num);
-        score.text(cScore);
-    }
+
     // 更新屏幕显示
     function update() {
         $('.number-cell').remove();
@@ -446,20 +484,19 @@
             for (var j = 0; j < 4; j++) {
                 if (parseInt(board[i][j]) != 0) {
                     // 数字不为0的时候显示出来   并且设置他们的样式
-                    $('#box').append(
-                        "<div class='number-cell' id='number-cell-" + i + '-' + j + "'></div>"
-                    );
-                    $('#number-cell-' + i + '-' + j)
+                    const el = $("<div class='number-cell' id='number-cell-" + i + '-' + j + "'/>")
                         .css({
-                            width: size,
-                            height: size,
-                            top: getPos(i),
-                            left: getPos(j),
-                            'background-color': getBgColor(board[i][j]),
+                            width: size + (isMobile ? 'rem' : 'px'),
+                            height: size + (isMobile ? 'rem' : 'px'),
+                            top: getPos(i) + (isMobile ? 'rem' : 'px'),
+                            left: getPos(j) + (isMobile ? 'rem' : 'px'),
+                            backgroundColor: getBgColor(board[i][j]),
                             color: getNumColor(board[i][j]),
                             fontSize: getNumFontSize(board[i][j])
                         })
                         .text(board[i][j]);
+
+                    $('#box').append(el);
                 }
             }
         }
@@ -474,19 +511,19 @@
             .css({
                 'background-color': getBgColor(num),
                 color: getNumColor(num),
-                top: getPos(x) + 53,
-                left: getPos(y) + 53,
+                top: getPos(x) + size / 2 + (isMobile ? 'rem' : 'px'),
+                left: getPos(y) + size / 2 + (isMobile ? 'rem' : 'px'),
                 lineHeight: '0px',
                 fontSize: getNumFontSize(num)
             })
             .text(num)
             .animate(
                 {
-                    lineHeight: '110px',
-                    width: size,
-                    height: size,
-                    top: getPos(x),
-                    left: getPos(y)
+                    lineHeight: size + (isMobile ? 'rem' : 'px'),
+                    width: size + (isMobile ? 'rem' : 'px'),
+                    height: size + (isMobile ? 'rem' : 'px'),
+                    top: getPos(x) + (isMobile ? 'rem' : 'px'),
+                    left: getPos(y) + (isMobile ? 'rem' : 'px')
                 },
                 250
             )
@@ -497,8 +534,8 @@
         'origen 原来的位置     target移动到的位置';
         $('#number-cell-' + origen[0] + '-' + origen[1]).animate(
             {
-                top: getPos(target[0]),
-                left: getPos(target[1])
+                top: getPos(target[0]) + (isMobile ? 'rem' : 'px'),
+                left: getPos(target[1]) + (isMobile ? 'rem' : 'px')
             },
             200
         );
@@ -527,8 +564,11 @@
         if (history_board.length <= 0) {
             return false;
         }
+        if (game_over) {
+            alert('游戏已结束，请重新开始。');
+            return false;
+        }
         if (!back_times.reduce()) {
-            alert('撤销次数用尽');
             return false;
         }
         board = history_board.pop();
@@ -541,6 +581,12 @@
             $('#ctrl-backup').attr('class', 'ctrl-box');
         } else {
             $('#ctrl-backup').attr('class', 'ctrl-box disabled');
+        }
+
+        if (sort_times.value > 0) {
+            $('#ctrl-resort').attr('class', 'ctrl-box');
+        } else {
+            $('#ctrl-resort').attr('class', 'ctrl-box disabled');
         }
     }
     init();
