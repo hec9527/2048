@@ -87,13 +87,16 @@ body {
     color: #fff;
     border-radius: 8px;
     background: #5ca8f8;
-    box-shadow: 4px 4px 20px #5ca8f8, -2px -2px 20px #ededed;
+    box-shadow: 4px 4px 15px #d3d3d3, -4px -4px 15px #fff;
     line-height: 48px;
     text-align: center;
     cursor: pointer;
     margin-bottom: 16px;
+    transform: translateY(-2px);
+    transition: all 100ms linear;
 }
 .ctrl-box:hover {
+    transform: none;
     box-shadow: none;
 }
 
