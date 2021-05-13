@@ -1,7 +1,7 @@
-<center style="text-align:center">
+<div style="text-align:center" align="center">
     <h1>2048 小游戏</h1>
     <p>powered by hec9527</p>
-</center>
+</div>
 
 ## ✅ 正确食用
 
