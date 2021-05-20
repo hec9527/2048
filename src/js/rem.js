@@ -5,6 +5,7 @@
 
     function resize() {
         var w = d.clientWidth;
+        console.log(`clientwidth: ${w}`);
         w = w < 320 ? 320 : w;
         w = w > 1024 ? 1024 : w;
         s.innerHTML = `

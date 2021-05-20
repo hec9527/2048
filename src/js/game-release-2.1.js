@@ -10,7 +10,7 @@
  */
 
 (function () {
-    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/gi.test(
         navigator.userAgent
     );
     var size = isMobile ? 17 : 110;
