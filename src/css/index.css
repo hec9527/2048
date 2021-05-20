@@ -131,7 +131,7 @@ body {
     body,
     #continer {
         display: block;
-        width: 360px;
+        width: 100rem;
         height: 100%;
     }
     #continer {
