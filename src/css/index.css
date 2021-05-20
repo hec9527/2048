@@ -131,8 +131,8 @@ body {
     body,
     #continer {
         display: block;
-        width: 100rem;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
     }
     #continer {
         width: 100%;
