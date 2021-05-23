@@ -127,12 +127,17 @@ body {
 
 /* 移动端适配 */
 @media screen and (max-width: 780px) {
+    * {
+        border: none !important;
+        box-shadow: none !important;
+    }
     html,
     body,
     #continer {
         display: block;
         width: 100vw;
         height: 100vh;
+        overflow: hidden;
     }
     #continer {
         width: 100%;

@@ -371,7 +371,7 @@
                             animationMove(cFlag, cIndex);
                             board[cIndex[0]][cIndex[1]] = board[cIndex[0]][cIndex[1]] * 2;
                             board[cFlag[0]][cFlag[1]] = 0;
-                            score.add(board[cIndex[0]][cIndex[1]] * 2);
+                            score.add(board[cIndex[0]][cIndex[1]]);
                         }
                         continue lable1;
                     } //   当指针指向的方块的数字为0 的时候继续查看下一个方块
