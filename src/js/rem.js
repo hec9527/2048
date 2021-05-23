@@ -6,8 +6,8 @@
     function resize() {
         var w = d.clientWidth;
         console.log(`clientwidth: ${w}`);
-        w = w < 320 ? 320 : w;
-        w = w > 1024 ? 1024 : w;
+        if (w < 320) w = 320;
+        else if (w > 1024) w = 1024;
         s.innerHTML = `
         html{ 
             font-size: ${w / 100}px !important;

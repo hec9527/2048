@@ -160,6 +160,11 @@ body {
         width: 100%;
         height: auto;
         padding: 0 5rem;
+        align-items: center;
+    }
+
+    #mesBox > * {
+        width: 100%;
     }
 
     #scope {
@@ -172,13 +177,14 @@ body {
 
     #ctrl {
         all: initial;
-        width: 90rem;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
+        width: 80rem;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
     }
     .ctrl-box {
         width: auto;
         margin-bottom: 10rem;
+        width: 25rem;
     }
 }

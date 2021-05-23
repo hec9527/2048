@@ -16,6 +16,9 @@
     var size = isMobile ? 17 : 110;
     var padding = isMobile ? 2.4 : 16;
 
+    console.log(`isMobile:${isMobile}`);
+    console.log(window.devicePixelRatio);
+
     var colors = {
         2: '#eee4da',
         4: '#ede0c8',
