@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="stylesheet" href="./css/index.css" />
-        <script src="./js/rem.js"></script>
-        <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.4.1/vconsole.min.js"></script>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <script src="./js/rem.js"></script>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.4.1/vconsole.min.js"></script>
         <script>
             new VConsole();
         </script> -->
-        <title>2048</title>
-    </head>
-    <body>
-        <div id="continer">
-            <div id="gameBox">
-                <ul id="box"></ul>
+    <title>2048</title>
+</head>
+
+<body>
+    <div id="continer">
+        <div id="gameBox">
+            <ul id="box"></ul>
+        </div>
+        <div id="mesBox">
+            <div id="scope">
+                <h1>分数:</h1>
+                <div id="scopeValue">0</div>
             </div>
-            <div id="mesBox">
-                <div id="scope">
-                    <h1>分数:</h1>
-                    <div id="scpoeValue">0</div>
+            <div id="ctrl">
+                <div class="ctrl-box" id="ctrl-reset">重新开始</div>
+                <div class="ctrl-box" id="ctrl-resort">
+                    排序(<span id="sort-times">3</span>)
                 </div>
-                <div id="ctrl">
-                    <div class="ctrl-box" id="ctrl-reset">重新开始</div>
-                    <div class="ctrl-box" id="ctrl-resort">
-                        排序(<span id="sort-times">3</span>)
-                    </div>
-                    <div class="ctrl-box disabled" id="ctrl-backup">
-                        撤销(<span id="back-times">3</span>)
-                    </div>
+                <div class="ctrl-box disabled" id="ctrl-backup">
+                    撤销(<span id="back-times">3</span>)
                 </div>
             </div>
         </div>
-        <script src="./js/jquery-3.1.1.min.js"></script>
-        <script src="./js/game-release-2.1.js"></script>
-    </body>
+    </div>
+    <script src="./js/jquery-3.1.1.min.js"></script>
+    <script src="./js/game-release-2.1.js"></script>
+</body>
+
 </html>

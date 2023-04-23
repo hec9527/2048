@@ -1,7 +1,7 @@
 /**
  *  @author         hc
  *  @ctime          2019/6/8
- *  @lastModifi     2021/05/13
+ *  @lastModify     2021/05/13
  *  @description
  *
  *  判断是否可以移动也是采用行列映射的方式,依次处理每一行或者每一列,但是判定的关键是:
@@ -37,7 +37,7 @@
 
     var board = Array();
     var score = {
-        el: $('#scpoeValue'),
+        el: $('#scopeValue'),
         value: 0,
         init: function () {
             this.value = 0;
@@ -123,7 +123,7 @@
                         ifCanMoveDown() && moveDown();
                     }
                 }
-                ifGmaeOver();
+                isGameOver();
             }
         });
     })();
@@ -171,7 +171,7 @@
                     ifCanMoveUp() && moveUp();
                 }
             }
-            ifGmaeOver();
+            isGameOver();
         });
     })();
 
@@ -224,12 +224,12 @@
     function getRandPosAndNum() {
         if (ifHasBlock()) {
             do {
-                var randx = parseInt(Math.floor(Math.random() * 4));
-                var randy = parseInt(Math.floor(Math.random() * 4));
-            } while (board[randx][randy] != 0);
+                var randX = parseInt(Math.floor(Math.random() * 4));
+                var randY = parseInt(Math.floor(Math.random() * 4));
+            } while (board[randX][randY] != 0);
             var num = Math.random() < 0.7 ? 2 : 4;
-            board[randx][randy] = num;
-            animationNewNum(randx, randy, num);
+            board[randX][randY] = num;
+            animationNewNum(randX, randY, num);
         }
     }
     // 根据所给的数字获取对应的    背景颜色
@@ -294,11 +294,11 @@
      */
     function ifCanMoveUp() {
         for (var i = 0; i < 4; i++) {
-            var olis = [];
+            var arr = [];
             for (var j = 0; j < 4; j++) {
-                olis.push(board[j][i]);
+                arr.push(board[j][i]);
             }
-            if (ifCanMove(olis)) {
+            if (ifCanMove(arr)) {
                 return true;
             }
         }
@@ -307,11 +307,11 @@
     // 判断是否可以向下移动
     function ifCanMoveDown() {
         for (var j = 0; j < 4; j++) {
-            var olis = [];
+            var arr = [];
             for (var i = 3; i >= 0; i--) {
-                olis.push(board[i][j]);
+                arr.push(board[i][j]);
             }
-            if (ifCanMove(olis)) {
+            if (ifCanMove(arr)) {
                 return true;
             }
         }
@@ -320,8 +320,8 @@
     // 判断是否可以向左移动
     function ifCanMoveLeft() {
         for (var i = 0; i < 4; i++) {
-            var olis = board[i];
-            if (ifCanMove(olis)) {
+            var arr = board[i];
+            if (ifCanMove(arr)) {
                 return true;
             }
         }
@@ -330,11 +330,11 @@
     // 判断是否可以向右移动
     function ifCanMoveRight() {
         for (var i = 0; i < 4; i++) {
-            var olis = [];
+            var arr = [];
             for (var j = 3; j >= 0; j--) {
-                olis.push(board[i][j]);
+                arr.push(board[i][j]);
             }
-            if (ifCanMove(olis)) {
+            if (ifCanMove(arr)) {
                 return true;
             }
         }
@@ -345,7 +345,7 @@
      */
     function move(lis) {
         move_lock = true;
-        lable1: for (var i = 0; i < 4; i++) {
+        label: for (var i = 0; i < 4; i++) {
             var cIndex = lis[i]; // 保存当前在遍历的索引
             if (board[cIndex[0]][cIndex[1]] == 0) {
                 // 当前遍历的方块的数字为0
@@ -358,7 +358,7 @@
                         board[cIndex[0]][cIndex[1]] = board[cFlag[0]][cFlag[1]];
                         board[cFlag[0]][cFlag[1]] = 0;
                         i--;
-                        continue lable1;
+                        continue label;
                     }
                 }
             } else {
@@ -373,7 +373,7 @@
                             board[cFlag[0]][cFlag[1]] = 0;
                             score.add(board[cIndex[0]][cIndex[1]]);
                         }
-                        continue lable1;
+                        continue label;
                     } //   当指针指向的方块的数字为0 的时候继续查看下一个方块
                 }
             }
@@ -387,11 +387,11 @@
     function moveUp() {
         push_board(board);
         for (var i = 0; i < 4; i++) {
-            var olis = [];
+            var arr = [];
             for (var j = 0; j < 4; j++) {
-                olis.push([j, i]);
+                arr.push([j, i]);
             }
-            move(olis);
+            move(arr);
         }
         getRandPosAndNum();
     }
@@ -399,11 +399,11 @@
     function moveDown() {
         push_board(board);
         for (var i = 0; i < 4; i++) {
-            var olis = [];
+            var arr = [];
             for (var j = 3; j >= 0; j--) {
-                olis.push([j, i]);
+                arr.push([j, i]);
             }
-            move(olis);
+            move(arr);
         }
         getRandPosAndNum();
     }
@@ -411,11 +411,11 @@
     function moveLeft() {
         push_board(board);
         for (var i = 0; i < 4; i++) {
-            var olis = [];
+            var arr = [];
             for (var j = 0; j < 4; j++) {
-                olis.push([i, j]);
+                arr.push([i, j]);
             }
-            move(olis);
+            move(arr);
         }
         getRandPosAndNum();
     }
@@ -423,17 +423,17 @@
     function moveRight() {
         push_board(board);
         for (var i = 0; i < 4; i++) {
-            var olis = [];
+            var arr = [];
             for (var j = 3; j >= 0; j--) {
-                olis.push([i, j]);
+                arr.push([i, j]);
             }
-            move(olis);
+            move(arr);
         }
         getRandPosAndNum();
     }
     // 排序  可以将游戏中的方块排列成有序的队列
     function sortGame() {
-        var olis = [];
+        var arr = [];
         if (!sort_times.reduce()) {
             alert('排序次数已用完！');
             return false;
@@ -443,18 +443,18 @@
             return false;
         }
         for (var i = 0; i < 4; i++) {
-            olis = olis.concat(board[i]);
+            arr = arr.concat(board[i]);
         }
-        olis.sort(function (a, b) {
+        arr.sort(function (a, b) {
             return b - a;
         });
         board = [[], [], [], []];
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
                 if (i % 2 == 0) {
-                    board[3 - j][i] = olis[i * 4 + j];
+                    board[3 - j][i] = arr[i * 4 + j];
                 } else {
-                    board[j][i] = olis[i * 4 + j];
+                    board[j][i] = arr[i * 4 + j];
                 }
             }
         }
@@ -462,7 +462,7 @@
         setAttr();
     }
     // 检测游戏是否 Over
-    function ifGmaeOver() {
+    function isGameOver() {
         if (
             ifHasBlock() ||
             ifCanMoveRight() ||
@@ -553,11 +553,11 @@
         if (history_board.length >= 3) {
             history_board.shift();
         }
-        let cboard = [];
+        let arr = [];
         for (let row = 0; row < 4; row++) {
-            cboard[row] = board[row].slice(0);
+            arr[row] = board[row].slice(0);
         }
-        history_board.push(cboard);
+        history_board.push(arr);
         setAttr();
     }
     /**
